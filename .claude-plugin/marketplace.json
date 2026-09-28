@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "postdaily",
+  "description": "PostDaily's plugins for Claude Code.",
+  "owner": {
+    "name": "PostDaily",
+    "email": "support@postdaily.app"
+  },
+  "plugins": [
+    {
+      "name": "postdaily",
+      "description": "Draft, schedule and publish social posts from Claude Code with PostDaily.",
+      "source": "./plugins/postdaily",
+      "category": "productivity",
+      "homepage": "https://www.postdaily.app/help/connect-ai-apps"
+    }
+  ]
+}

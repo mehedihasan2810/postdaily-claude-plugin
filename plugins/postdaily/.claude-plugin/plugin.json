@@ -1,0 +1,21 @@
+{
+  "name": "postdaily",
+  "version": "1.0.0",
+  "description": "Draft, schedule and publish social posts from Claude Code with PostDaily — Instagram, Facebook, TikTok, YouTube, LinkedIn, X, Threads, Pinterest, Bluesky and Mastodon. Signs in with your PostDaily account, uploads local images and videos, turns a release into posts, and asks before anything publishes.",
+  "author": {
+    "name": "PostDaily",
+    "email": "support@postdaily.app",
+    "url": "https://www.postdaily.app"
+  },
+  "homepage": "https://www.postdaily.app/help/connect-ai-apps",
+  "repository": "https://github.com/mehedihasan2810/postdaily-claude-plugin",
+  "license": "MIT",
+  "keywords": [
+    "social media",
+    "scheduling",
+    "marketing",
+    "instagram",
+    "linkedin",
+    "mcp"
+  ]
+}

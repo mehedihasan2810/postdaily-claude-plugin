@@ -1,0 +1,6 @@
+{
+  "postdaily": {
+    "type": "http",
+    "url": "https://mcp.postdaily.app/mcp"
+  }
+}

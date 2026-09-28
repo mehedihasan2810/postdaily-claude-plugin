@@ -1,0 +1,17 @@
+{
+  "description": "Ask before a PostDaily call publishes immediately, deletes or cancels a post, or schedules a batch.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^mcp__.*postdaily.*__(create_post|schedule_post|retry_post|cancel_post|delete_post|bulk_create_posts)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
