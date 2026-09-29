@@ -10,7 +10,7 @@
     {
       "name": "postdaily",
       "description": "Draft, schedule and publish social posts from Claude Code with PostDaily.",
-      "source": "./plugins/postdaily",
+      "source": "./",
       "category": "productivity",
       "homepage": "https://www.postdaily.app/help/connect-ai-apps"
     }
