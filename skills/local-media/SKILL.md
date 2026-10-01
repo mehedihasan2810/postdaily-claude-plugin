@@ -1,15 +1,17 @@
 ---
 name: local-media
-description: Use when the user wants to attach a local file — an image, video or PDF on this machine, such as a screenshot, a rendered video or an export — to a PostDaily post.
+description: Use when the user wants to attach an image, video or PDF from their own device — such as a screenshot, a rendered video or an export — to a PostDaily post.
 ---
 
-# Attaching a local file to a PostDaily post
+# Attaching a file from the user's device to a PostDaily post
 
-PostDaily can take a file straight from this machine: ask for a one-time
-upload URL, PUT the bytes with curl, then confirm. Files reachable by a public
-`https://` URL are simpler — pass that to `import_media` instead.
+Files reachable by a public `https://` URL are simplest — pass that URL to
+`import_media`. For a file on the user's device there are two ways in; use the
+first one you can.
 
-## Steps
+## If you can run commands and read the file
+
+This works in a coding agent on the user's computer.
 
 1. Check the file exists and read its size and type:
 
@@ -37,11 +39,25 @@ upload URL, PUT the bytes with curl, then confirm. Files reachable by a public
    dimensions or duration. A mismatch means the wrong file or a changed file
    was sent — start again from step 1.
 
-5. Attach it: `media: [{ "mediaId": "…", "altText": "…" }]` on `create_post`,
-   `update_post` or `validate_post`. Write alt text for images from what the
-   image actually shows — look at it first if you can.
+## If you cannot
 
-## Before posting
+This is the way in a chat on the web, the desktop or a phone, even when the
+user attached the file to the conversation: the chat's copy of the file can't
+be sent to PostDaily.
+
+1. Call `list_media`. It returns `uploadUrl`, a PostDaily page where the user
+   uploads files from their own device into the workspace, and `now`, the
+   current time.
+2. Give the user that link and ask them to upload the file there and tell you
+   when it is done.
+3. Call `list_media` again with `uploadedAfter` set to that `now`: it returns
+   only what they added. Use its `mediaId`.
+
+## Attach it and check
+
+Attach the file with `media: [{ "mediaId": "…", "altText": "…" }]` on
+`create_post`, `update_post` or `validate_post`. Write alt text for images from
+what the image actually shows — look at it first if you can.
 
 Run `validate_post` with the media attached: each network has its own limits
 on size, length, aspect ratio and how many files a post can carry, and the

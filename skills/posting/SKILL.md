@@ -1,19 +1,22 @@
 ---
 name: posting
-description: Use when the user wants to write, draft, schedule, publish, reschedule, cancel or check social media posts with PostDaily (Instagram, Facebook, TikTok, YouTube, LinkedIn, X, Threads, Pinterest, Bluesky, Mastodon), or asks about their PostDaily queue, channels or analytics.
+description: Use when the user wants to write, draft, schedule, publish, reschedule, cancel or check social media posts with PostDaily (Instagram, Facebook, TikTok, YouTube, X, Threads, Pinterest, Bluesky, Mastodon), or asks about their PostDaily queue, channels or analytics.
 ---
 
 # Posting with PostDaily
 
 PostDaily's tools come from the `postdaily` MCP server this plugin adds. If
-they are not available yet, the user has not signed in: ask them to run
-`/mcp`, choose postdaily and authenticate. PostDaily opens in the browser to
-choose workspaces and an access level; after that the tools just work.
+they are not available yet, the user has not connected PostDaily: ask them to
+connect it — in Claude on the web, desktop or mobile and in Cowork from the
+plugin's **Connectors** tab (Customize → Plugins → PostDaily), in Claude Code
+by running `/mcp`, choosing postdaily and authenticating. PostDaily opens in
+the browser to choose workspaces and an access level; after that the tools
+just work.
 
 ## Before writing anything
 
 1. Call `list_workspaces`, then `list_channels`. Never invent ids. A channel
-   can also be named by network (`linkedin`) or `@handle`; if a name matches
+   can also be named by network (`bluesky`) or `@handle`; if a name matches
    more than one channel the tool returns the candidates — ask which one.
 2. Pinterest needs a board and TikTok a privacy level the account allows:
    call `get_channel_options` for those channels before setting options.
@@ -38,8 +41,9 @@ choose workspaces and an access level; after that the tools just work.
   the workspace's timezone — say which timezone you used.
 - **Publishing right now** (`mode: "now"`) and `retry_post` need
   `confirmPublish: true`. Before sending it, show the exact text, media and
-  channels and get a clear yes. The plugin also asks the user in Claude Code
-  before the call goes out.
+  channels and get a clear yes. Claude may also ask the user to approve the
+  call itself, and in Claude Code and Cowork this plugin's hook does; that
+  approval does not replace this one.
 - If a result has `outcome: "needs_confirmation"` because of warnings, show the
   warnings, and only re-send with `confirmWarnings: true` if the user agrees.
 - Send an `idempotencyKey` (a fresh UUID) with every write, and reuse the same
@@ -61,4 +65,6 @@ choose workspaces and an access level; after that the tools just work.
 
 A connection is Full access, Drafts only or Read only, and only sees the tools
 its level allows. If a tool you need is missing, tell the user to reconnect
-with a higher level (run `/mcp`, choose postdaily, and sign in again).
+with a higher level and choose it on PostDaily's consent page — from the
+plugin's **Connectors** tab, or in Claude Code by running `/mcp`, choosing
+postdaily and signing in again.
