@@ -25,14 +25,21 @@ This works in a coding agent on the user's computer.
    first (for example a GIF or HEIC to PNG or MP4) and tell the user you did.
 
 2. Call `create_media_upload` with the `workspaceId`, `filename`,
-   `contentType` and `sizeBytes`. It returns `uploadUrl`, `headers`, a ready
-   `curl` command and a `mediaId`. The URL works once and expires at
-   `expiresAt`.
+   `contentType` and `sizeBytes`. It returns `uploadUrl`, `headers` and a
+   `mediaId`. The URL works once and expires at `expiresAt`.
 
-3. Run the returned `curl` command with `<path to …>` replaced by the file's
-   real path, quoted. Keep every `-H` header exactly as given: the URL is
-   signed for that content type and size. Do not print or log the upload URL
-   anywhere else; it grants a write.
+3. Upload the file's bytes with an HTTP PUT to `uploadUrl`, sending every
+   entry in `headers` exactly as given: the URL is signed for that content
+   type and size. Write the command yourself, with the file's real path,
+   quoted, and one `-H` for each header:
+
+   ```bash
+   curl --fail -X PUT --upload-file "path/to/file" \
+     -H "Content-Type: image/png" \
+     "UPLOAD_URL"
+   ```
+
+   Do not print or log the upload URL anywhere else; it grants a write.
 
 4. Call `complete_media_upload` with the `mediaId`. PostDaily checks the
    stored file has the size and type you declared, and returns it with its
