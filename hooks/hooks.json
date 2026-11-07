@@ -3,11 +3,61 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "^mcp__.*postdaily.*__(create_post|schedule_post|retry_post|cancel_post|delete_post|bulk_create_posts)$",
+        "matcher": "^mcp__.*postdaily.*__create_post$",
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\"",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" create_post",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__schedule_post$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" schedule_post",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__retry_post$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" retry_post",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__cancel_post$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" cancel_post",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__delete_post$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" delete_post",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__bulk_create_posts$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" bulk_create_posts",
             "timeout": 10
           }
         ]

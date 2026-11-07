@@ -53,7 +53,7 @@ it any time in PostDaily under **Settings → AI agents**.
 - **Hook:** `hooks/confirm-publish.sh` runs on your computer before PostDaily
   tool calls in Claude Code and Cowork. It reads the tool name and arguments
   it is given, prints a permission decision, and sends nothing anywhere. It
-  uses only `sh`, `sed` and `grep`.
+  uses only `sh` and `grep`.
 - **Skills:** instructions only. Where Claude can run commands, the
   `local-media` skill asks it to read a file's size and type (`wc`, `file`)
   and upload it with `curl` to the one-time URL PostDaily returns; elsewhere
@@ -93,11 +93,14 @@ Feed the hook an event to see its decision:
 
 ```bash
 printf '%s' '{"tool_name":"mcp__plugin_postdaily_postdaily__create_post","tool_input":{"mode":"now","confirmPublish":true}}' \
-  | sh hooks/confirm-publish.sh
+  | sh hooks/confirm-publish.sh create_post
 ```
 
-It prints `"permissionDecision":"ask"` for publish-now, retries, deletes,
-cancels and batches, and nothing (proceed normally) for everything else.
+The tool name is the argument, as `hooks/hooks.json` passes it; the hook
+never reads it from the event. It prints `"permissionDecision":"ask"` for
+publish-now, retries, deletes, cancels and batches, and for a tool it does
+not know. It prints nothing (proceed normally) for drafts and scheduled
+posts.
 
 ## License
 
