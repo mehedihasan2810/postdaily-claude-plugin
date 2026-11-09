@@ -5,8 +5,9 @@ Draft, schedule and publish social media posts with
 X, Threads, Pinterest, Bluesky and Mastodon — in Claude on the web, the desktop
 and mobile apps, Cowork and Claude Code. Ask in plain words, check a post
 against each network's limits before it is saved, attach images and videos,
-and turn release notes into posts. Publishing a post immediately always asks
-for your confirmation first.
+and turn release notes into posts. Claude asks for your clear yes before a
+post publishes immediately, and PostDaily refuses a publish-now call that
+doesn't carry that confirmation.
 
 You need a PostDaily account with at least one connected social channel.
 
@@ -39,10 +40,6 @@ it any time in PostDaily under **Settings → AI agents**.
   - `local-media`: attach an image, video or PDF from your own device.
   - `release-posts`: turn release notes, or a repository's recent changes,
     into per-network drafts announcing a release.
-- **A confirmation hook** (Claude Code and Cowork): Claude asks you before a
-  call publishes immediately, retries a failed post, deletes or cancels a
-  post, schedules a batch, or writes into one of your workspaces just after
-  working in another, even when PostDaily's tools are otherwise allowed.
 
 ## What this plugin runs and sends
 
@@ -50,10 +47,6 @@ it any time in PostDaily under **Settings → AI agents**.
   `https://mcp.postdaily.app/mcp`, reached after you sign in with OAuth. It
   receives the requests Claude makes with PostDaily's tools and nothing else.
   The post preview card loads images only from PostDaily's media domains.
-- **Hook:** `hooks/confirm-publish.sh` runs on your computer before PostDaily
-  tool calls in Claude Code and Cowork. It reads the tool name and arguments
-  it is given, prints a permission decision, and sends nothing anywhere. It
-  uses only `sh` and `grep`.
 - **Skills:** instructions only. Where Claude can run commands, the
   `local-media` skill asks it to read a file's size and type (`wc`, `file`)
   and upload it with `curl` to the one-time URL PostDaily returns; elsewhere
@@ -88,19 +81,6 @@ both the plugin (`.claude-plugin/plugin.json`) and a one-plugin marketplace
 claude plugin validate --strict .
 claude --plugin-dir . plugin details postdaily
 ```
-
-Feed the hook an event to see its decision:
-
-```bash
-printf '%s' '{"tool_name":"mcp__plugin_postdaily_postdaily__create_post","tool_input":{"mode":"now","confirmPublish":true}}' \
-  | sh hooks/confirm-publish.sh create_post
-```
-
-The tool name is the argument, as `hooks/hooks.json` passes it; the hook
-never reads it from the event. It prints `"permissionDecision":"ask"` for
-publish-now, retries, deletes, cancels and batches, and for a tool it does
-not know. It prints nothing (proceed normally) for drafts and scheduled
-posts.
 
 ## License
 
