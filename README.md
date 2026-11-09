@@ -41,8 +41,8 @@ it any time in PostDaily under **Settings → AI agents**.
     into per-network drafts announcing a release.
 - **A confirmation hook** (Claude Code and Cowork): Claude asks you before a
   call publishes immediately, retries a failed post, deletes or cancels a
-  post, or schedules a batch, even when PostDaily's tools are otherwise
-  allowed.
+  post, schedules a batch, or writes into one of your workspaces just after
+  working in another, even when PostDaily's tools are otherwise allowed.
 
 ## What this plugin runs and sends
 

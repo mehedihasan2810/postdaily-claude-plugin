@@ -1,5 +1,5 @@
 {
-  "description": "Ask before a PostDaily call publishes immediately, deletes or cancels a post, or schedules a batch.",
+  "description": "Ask before a PostDaily call publishes immediately, deletes or cancels a post, schedules a batch, or writes into one workspace after working in another.",
   "hooks": {
     "PreToolUse": [
       {
@@ -58,6 +58,46 @@
           {
             "type": "command",
             "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" bulk_create_posts",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__update_post$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" update_post",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__import_media$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" import_media",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__create_media_upload$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" create_media_upload",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__.*postdaily.*__complete_media_upload$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/confirm-publish.sh\" complete_media_upload",
             "timeout": 10
           }
         ]
